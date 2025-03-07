@@ -23,6 +23,37 @@
     </li>
 </ul>
 
+<h2>Danh sách User</h2>
+<form>
+    <input placeholder="Enter name...." name ="keyword" />
+</form>
+<hr />
+
+<table>
+
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Age</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="person : ${people}">
+        <td th:text="${person.id}">ID</td>
+        <td th:text="${person.name}">Name</td>
+        <td th:text="${person.gender}">Gender</td>
+        <td th:text="${person.age}">Age</td>
+        <td>
+            <a href="'/person/' + ${person.id}">Xem chi tiết</a>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
 <h2>Hello world</h2>
 
 <script th:src="@{/js/main.js}"></script>
