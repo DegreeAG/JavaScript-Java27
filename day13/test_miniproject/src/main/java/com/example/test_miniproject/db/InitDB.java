@@ -21,12 +21,9 @@ public class InitDB implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("Start init data");
 
-        //Đọc file Json
-       List<Product> products = FileReader.readFile("C:\\Users\\user\\Desktop\\Java-27\\Springboot\\day13\\test_miniproject\\product.json");
-       log.info("Sản phẩm from Json size: {}", products.size());
+        List<Product> products = FileReader.readFile("data/product.json");
+        log.info("Sản phẩm from Json size: {}", products.size());
 
-       //Lưu sản phẩm vào ProductDB
         ProductDB.products = products;
-
     }
 }
