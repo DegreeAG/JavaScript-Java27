@@ -14,4 +14,13 @@ public class ProductRepositoryImpl implements ProductRepository {
     public List<Product> findAll() {
         return ProductDB.products;
     }
+
+    @Override
+    public Product findById(int id) {
+        return ProductDB.products.stream()
+                .filter(product -> product.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
 }

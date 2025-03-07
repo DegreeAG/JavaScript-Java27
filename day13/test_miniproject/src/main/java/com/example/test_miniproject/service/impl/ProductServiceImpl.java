@@ -20,4 +20,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllBooks() {
         return productRepository.findAll();
     }
+
+    @Override
+    public Product getProductById(int id) {
+        return productRepository.findById(id);
+    }
 }
