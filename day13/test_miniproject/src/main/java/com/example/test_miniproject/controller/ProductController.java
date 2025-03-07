@@ -2,12 +2,13 @@ package com.example.test_miniproject.controller;
 
 import com.example.test_miniproject.model.Product;
 import com.example.test_miniproject.service.ProductService;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.List;
 
@@ -19,11 +20,11 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/") // http://localhost:8080
+    @GetMapping("/")
     public String getAllProduct(Model model) {
         List<Product> products = productService.getAllProducts();
         model.addAttribute("products", products);
-        return "product-list"; // Tên template Thymeleaf
+        return "product-list";
     }
 
     @GetMapping("/products/{id}")
@@ -31,9 +32,18 @@ public class ProductController {
         Product product = productService.getProductById(id);
         if (product != null) {
             model.addAttribute("product", product);
-            return "product-detail"; // Tên template Thymeleaf
+            return "product-detail";
         } else {
-            return "error"; // Trang lỗi nếu không tìm thấy
+            return "error";
         }
     }
+
+    @GetMapping("/search")
+    public String searchProducts(@RequestParam String keyword, Model model) {
+        List<Product> products = productService.searchProducts(keyword);
+        model.addAttribute("products", products);
+        return "product-list";
+    }
+
+    
 }
