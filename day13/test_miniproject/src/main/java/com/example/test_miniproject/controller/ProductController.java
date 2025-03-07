@@ -3,14 +3,15 @@ package com.example.test_miniproject.controller;
 import com.example.test_miniproject.model.Product;
 import com.example.test_miniproject.service.ProductService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-
+@Controller
 public class ProductController {
     private final ProductService productService;
 
@@ -18,20 +19,21 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping //http://localhost:8080
-    public ResponseEntity<?> getAllProduct(){
-        List<Product> products = productService.getAllBooks();
-        return ResponseEntity.ok(products);
+    @GetMapping("/") // http://localhost:8080
+    public String getAllProduct(Model model) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        return "product-list"; // Tên template Thymeleaf
     }
-
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable int id){
+    public String getProductById(@PathVariable int id, Model model) {
         Product product = productService.getProductById(id);
-        return ResponseEntity.ok(product);
+        if (product != null) {
+            model.addAttribute("product", product);
+            return "product-detail"; // Tên template Thymeleaf
+        } else {
+            return "error"; // Trang lỗi nếu không tìm thấy
+        }
     }
-
-
-
-
 }

@@ -5,7 +5,8 @@ import com.example.test_miniproject.model.Product;
 import java.util.List;
 
 public interface ProductService {
-    List<Product> getAllBooks();
+    List<Product> getAllProducts();
+
 
     Product getProductById(int id);
 }
