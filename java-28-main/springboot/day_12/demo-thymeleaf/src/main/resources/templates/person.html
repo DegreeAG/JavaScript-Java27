@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2 th:if="${person == null}">Person not found!!!!</h2>
+<div th:if="${person != null}">
+    <h2>Chi tiet person</h2>
+    <p th:text="${person.id}"></p>
+    <p th:text="${person.name}"></p>
+    <p th:text="${person.gender.equals('M') ? 'Nam' : 'Nu'}"></p>
+    <p th:if="${person.age >= 18}">Tren 18 tuoi</p>
+    <p th:if="${person.age < 18}">Duoi 18 tuoi</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách tập phim</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .pagination { margin-top: 10px; }
+        .pagination a { margin: 0 5px; text-decoration: none; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<h1>Danh sách tập phim</h1>
+
+<!-- Thông báo lỗi -->
+<div class="error" th:if="${error}" th:text="${error}"></div>
+
+<!-- Bảng danh sách tập phim -->
+<table th:if="${episodes != null}">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Display Order</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="episode : ${episodes.content}">
+        <td th:text="${episode.id}"></td>
+        <td th:text="${episode.name}"></td>
+        <td th:text="${episode.displayOrder}"></td>
+        <td th:text="${episode.status != null ? episode.status ? 'Active' : 'Inactive' : 'N/A'}"></td>
+        <td>
+            <a th:href="@{'/admin/episodes/edit/' + ${episode.id}}">Edit</a>
+        </td>
+    </tr>
+</table>
+
+<!-- Phân trang -->
+<div class="pagination" th:if="${episodes != null}">
+    <span th:text="'Page ' + ${episodes.number + 1} + ' of ' + ${episodes.totalPages}"></span>
+    <a th:href="@{'/admin/episodes?movieId=' + ${movieId} + '&page=' + (${episodes.number} + 1) + '&pageSize=' + ${episodes.size}}"
+       th:if="${!episodes.last}">Next</a>
+    <a th:href="@{'/admin/episodes?movieId=' + ${movieId} + '&page=' + (${episodes.number} - 1) + '&pageSize=' + ${episodes.size}}"
+       th:if="${!episodes.first}">Previous</a>
+</div>
+</body>
+</html>
