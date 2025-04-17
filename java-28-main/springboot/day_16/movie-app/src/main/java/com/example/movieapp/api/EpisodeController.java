@@ -43,7 +43,9 @@ public class EpisodeController {
             Episode episode = episodeService.createEpisode(request);
             return new ResponseEntity<>(episode, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -53,7 +55,9 @@ public class EpisodeController {
             Episode episode = episodeService.updateEpisode(id, request);
             return ResponseEntity.ok(episode);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -61,9 +65,11 @@ public class EpisodeController {
     public ResponseEntity<?> deleteEpisode(@PathVariable Integer id) {
         try {
             episodeService.deleteEpisode(id);
-            return ResponseEntity.ok("Xóa tập phim thành công");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
     }
 

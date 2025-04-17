@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -72,4 +73,7 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "director_id")
     )
     List<Director> directors;
+    
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Episode> episodes = new ArrayList<>();
 }
